@@ -17,7 +17,7 @@ shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000000000000
-HISTFILESIZE=2000000000
+HISTFILESIZE=2000000000000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -154,7 +154,7 @@ alias fullupdate='sudo apt full-upgrade -y'  # Upgrade packages, including kerne
 alias filesearch='find . -type f -iname'  # Search for files by name
 alias bigfiles='du -h --max-depth=1 | sort -hr'  # List largest files in the current directory
 alias showhidden='ls -ld .*'  # Show hidden files and directories
-alias editfile='nano'  # Open a text file for editing with nano
+alias editfile='vim'  # Open a text file for editing with nano
 
 # Archive management aliases
 alias extract='tar -zxvf'  # Extract a tar.gz archive
@@ -188,6 +188,8 @@ echo -e "- \033[1mnetstatl\033[0m: List all listening ports"
 echo -e "- \033[1mcpuinfo\033[0m: Show CPU information"
 echo -e "- \033[1mmeminfo\033[0m: Show memory information"
 echo -e "- \033[1mdiskinfo\033[0m: Show disk space information"
+echo -e "- \033[1msystemloadgraph\033[0m: Generate system load graphs for the last 5, 10, and 15 minutes"
+echo -e "- \033[1mupdatesystem\033[0m: Update system packages without installing new packages"
 
 echo -e "\n\033[1;36mPackage Management Commands:\033[0m"
 echo -e "- \033[1mshowpackages\033[0m: Show installed packages"
@@ -262,6 +264,44 @@ journalctl -p err
 # Function to view authentication logs
 function viewauthlogs() {
 journalctl -t sudo
+}
+
+# Function to view load avg graphs
+function systemloadgraph() {
+echo "Generating system load graphs..."
+
+# Extract load averages from /proc/loadavg
+load_5min=$(awk '{print $1}' /proc/loadavg)
+load_10min=$(awk '{print $2}' /proc/loadavg)
+load_15min=$(awk '{print $3}' /proc/loadavg)
+
+# Create data file for gnuplot
+echo -e "5min\t$load_5min\n10min\t$load_10min\n15min\t$load_15min" > /tmp/loadavg.dat
+
+# Create gnuplot script
+cat <<GNUPLOT_SCRIPT > /tmp/loadavg.gp
+set terminal dumb
+set title "System Load Averages"
+set xlabel "Time Interval"
+set ylabel "Load Average"
+set xtics nomirror
+set ytics nomirror
+set style fill solid
+plot "/tmp/loadavg.dat" using 2:xtic(1) with boxes title "Load Average"
+GNUPLOT_SCRIPT
+
+# Plot the graphs
+gnuplot /tmp/loadavg.gp
+
+# Remove temporary files
+rm /tmp/loadavg.dat /tmp/loadavg.gp
+}
+
+# Function to update system packages without installing new packages
+function updatesystem() {
+echo "Updating system packages without installing new packages..."
+sudo apt-get update
+sudo apt-get -o Dpkg::Options::="--force-confold" dist-upgrade --only-upgrade
 }
 
 # Display neofetch, IP address, CPU load, uptime, and last reboot state when starting an interactive shell
