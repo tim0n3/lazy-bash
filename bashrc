@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000000000
-HISTFILESIZE=200000000000
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -89,6 +89,11 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -112,6 +117,12 @@ fi
 
 # Customize the prompt to show current user, host, and current directory
 PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+
+# Aliases for common commands
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
 # System administration aliases
 alias update='sudo apt update && sudo apt upgrade -y'
@@ -149,14 +160,21 @@ alias editfile='nano'  # Open a text file for editing with nano
 alias extract='tar -zxvf'  # Extract a tar.gz archive
 alias compress='tar -zcvf'  # Create a tar.gz archive
 
-# Help command to display aliases with explanations
 # Help command to display aliases and functions with explanations
 function help() {
-echo -e "\n\033[1mAliases:\033[0m"
+echo -e "\n\033[1;36mFile Management Commands:\033[0m"
 echo -e "- \033[1mls\033[0m: List files with color highlighting"
 echo -e "- \033[1mll\033[0m: List detailed information about files"
 echo -e "- \033[1mla\033[0m: List all files, including hidden ones"
 echo -e "- \033[1ml\033[0m: List files in a compact format"
+echo -e "- \033[1mfilesearch\033[0m: Search for files by name"
+echo -e "- \033[1mbigfiles\033[0m: List largest files in the current directory"
+echo -e "- \033[1mshowhidden\033[0m: Show hidden files and directories"
+echo -e "- \033[1meditfile\033[0m: Open a text file for editing with nano"
+echo -e "- \033[1mextract\033[0m: Extract files from a tar.gz archive"
+echo -e "- \033[1mcompress\033[0m: Create a tar.gz archive"
+
+echo -e "\n\033[1;36mSystem Management Commands:\033[0m"
 echo -e "- \033[1mupdate\033[0m: Update package lists and upgrade installed packages"
 echo -e "- \033[1minstall\033[0m: Install a package"
 echo -e "- \033[1mremove\033[0m: Remove a package"
@@ -170,25 +188,26 @@ echo -e "- \033[1mnetstatl\033[0m: List all listening ports"
 echo -e "- \033[1mcpuinfo\033[0m: Show CPU information"
 echo -e "- \033[1mmeminfo\033[0m: Show memory information"
 echo -e "- \033[1mdiskinfo\033[0m: Show disk space information"
+
+echo -e "\n\033[1;36mPackage Management Commands:\033[0m"
 echo -e "- \033[1mshowpackages\033[0m: Show installed packages"
 echo -e "- \033[1mshowfiles\033[0m: Show files installed by a package"
 echo -e "- \033[1mshowsize\033[0m: Show installed package sizes"
 echo -e "- \033[1mupgrades\033[0m: Show available package upgrades"
 echo -e "- \033[1mfullupdate\033[0m: Upgrade packages, including kernel packages"
-echo -e "- \033[1mfilesearch\033[0m: Search for files by name"
-echo -e "- \033[1mbigfiles\033[0m: List largest files in the current directory"
-echo -e "- \033[1mshowhidden\033[0m: Show hidden files and directories"
-echo -e "- \033[1meditfile\033[0m: Open a text file for editing with nano"
-echo -e "- \033[1mextract\033[0m: Extract files from a tar.gz archive"
-echo -e "- \033[1mcompress\033[0m: Create a tar.gz archive"
+
+echo -e "\n\033[1;36mLogging and Analysis Commands:\033[0m"
 echo -e "- \033[1mviewsyslogs\033[0m: View system logs"
 echo -e "- \033[1mviewapplogs\033[0m: View specific application logs (Usage: viewapplogs <application-name>)"
 echo -e "- \033[1mviewrebootlogs\033[0m: View reboot logs"
 echo -e "- \033[1mviewwarninglogs\033[0m: View warning logs"
 echo -e "- \033[1mviewerrorlogs\033[0m: View error logs"
 echo -e "- \033[1mviewauthlogs\033[0m: View authentication logs"
+
+echo -e "\n\033[1;36mHelp Commands:\033[0m"
 echo -e "- \033[1mhelp\033[0m: Display this help message\n"
 }
+
 
 # Custom functions
 # Add your own custom functions here
