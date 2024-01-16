@@ -10,10 +10,10 @@ sleep 2
 cp -R bash_aliases ~/
 sleep 2
 # overwrite the current .bashrc and load the new shell features
-cat bashrc > ~/.bashrc && source ~/.bashrc
+cat bashrc > ~/.bashrc && cd ~/
 sleep 2
 # Go $Home and reload the shell
-cd ~/
+source ./.bashrc
 reloadbash
 }
 
