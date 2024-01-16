@@ -1,6 +1,24 @@
 # lazy-bash
 This is lazy-bash. I made this because I was tired of using the long commands required to administer linux systems. It's designed to be modular and extensible, making it simple for customizations to streamline common tasks
 
+- [lazy-bash](#lazy-bash)
+  - [Features](#features)
+    - [Prompt Customization](#prompt-customization)
+    - [Aliases for Common Commands](#aliases-for-common-commands)
+    - [Network Administration Aliases](#network-administration-aliases)
+    - [System Information Aliases](#system-information-aliases)
+    - [Package Management Aliases](#package-management-aliases)
+    - [File Management Aliases](#file-management-aliases)
+    - [Archive Management Aliases](#archive-management-aliases)
+    - [Custom Functions](#custom-functions)
+    - [Logging and Analysis Commands](#logging-and-analysis-commands)
+    - [System Information Display on Shell Startup](#system-information-display-on-shell-startup)
+    - [Help Command](#help-command)
+  - [Installation](#installation)
+    - [Dependencies](#dependencies)
+    - [New method](#new-method)
+    - [Old method](#old-method)
+
 ## Features
 
 ### Prompt Customization
