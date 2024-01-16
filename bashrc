@@ -115,7 +115,7 @@ PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
 
 # Custom functions
 
-directory_path="~/bash_aliases"
+directory_path="./bash_aliases"
 
 # Check if the directory exists
 if [ -d "$directory_path" ]; then
