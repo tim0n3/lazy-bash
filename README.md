@@ -75,6 +75,18 @@ Ensure these dependencies are installed using your system's package manager. For
 sudo apt-get install curl neofetch iptables net-tools gnuplot
 ```
 
+## New method:
+
+- Ensure you are in your $HOME folder by typing `cd` and pressing `return`
+- Verify your location by then typing `pwd` and pressing `return`. It should show your current directory as `/home/<your_username>`
+- Then proceed to run the following command.
+
+```bash
+bash <(curl -sSL https://raw.githubusercontent.com/tim0n3/lazy-bash/main/binfiles/setup.sh)
+```
+
+## Old method
+
 After ensuring that all dependencies are installed, you can use the provided installation script:
 
 To install this customized `.bashrc` configuration, you can paste the following script in your terminal or run it from a file:
