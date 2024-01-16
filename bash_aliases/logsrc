@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Function to view system logs
+function viewsyslogs() {
+	journalctl
+}
+
+# Function to view specific application logs
+function viewapplogs() {
+	if [ -z "$1" ]; then
+		echo "Usage: viewapplogs <application-name>"
+	else
+		journalctl -u $1
+	fi
+}
+
+# Function to view reboot logs
+function viewrebootlogs() {
+	journalctl -b
+}
+
+# Function to view warning logs
+function viewwarninglogs() {
+	journalctl -p warning
+}
+
+# Function to view error logs
+function viewerrorlogs() {
+	journalctl -p err
+}
+
+# Function to view authentication logs
+function viewauthlogs() {
+	journalctl -t sudo
+}

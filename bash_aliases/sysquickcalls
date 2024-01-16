@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# System shell aliases
+alias editbash='vim ~/.bashrc'
+alias reloadbash='clear && source ~/.bashrc'
+
+# Network administration aliases
+alias ipinfo='curl ipinfo.io'  # Show public IP information
+alias netstatl='sudo netstat -tulpn'  # List all listening ports
+
+# System information aliases
+alias cpuinfo='lscpu'
+alias meminfo='free -h'
+alias diskinfo='df -h'

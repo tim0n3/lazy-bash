@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function restartservice() {
+	sudo systemctl restart $1
+}
+
+function startservice() {
+	sudo systemctl start $1
+}
+
+function stopservice() {
+	sudo systemctl stop $1
+}
+
+function findfile() {
+	find . -type f -iname "*$1*"
+}

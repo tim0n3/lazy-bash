@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# File management aliases
+alias filesearch='find . -type f -iname'  # Search for files by name
+alias bigfiles='du -h --max-depth=1 | sort -hr'  # List largest files in the current directory
+alias showhidden='ls -ld .*'  # Show hidden files and directories
+alias editfile='vim'  # Open a text file for editing with nano
+
+# Archive management aliases
+alias extract='tar -zxvf'  # Extract a tar.gz archive
+alias compress='tar -zcvf'  # Create a tar.gz archive
