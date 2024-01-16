@@ -266,6 +266,13 @@ function viewauthlogs() {
 	journalctl -t sudo
 }
 
+# Function to update system packages without installing new packages
+function updatesystem() {
+	echo "Updating system packages without installing new packages..."
+	sudo apt-get update
+	sudo apt-get -o Dpkg::Options::="--force-confold" dist-upgrade --only-upgrade
+}
+
 # Function to view load avg graphs
 function systemloadgraph() {
 	echo "Generating system load graphs..."
@@ -295,13 +302,6 @@ function systemloadgraph() {
 
 	# Remove temporary files
 	rm /tmp/loadavg.dat /tmp/loadavg.gp
-}
-
-# Function to update system packages without installing new packages
-function updatesystem() {
-	echo "Updating system packages without installing new packages..."
-	sudo apt-get update
-	sudo apt-get -o Dpkg::Options::="--force-confold" dist-upgrade --only-upgrade
 }
 
 # Display neofetch, IP address, CPU load, uptime, and last reboot state when starting an interactive shell
