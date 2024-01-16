@@ -1,11 +1,6 @@
 #!/bin/bash
 
 function help() {
-    echo -e "\n\033[1;36mTroubleshooting Commands:\033[0m"
-    echo -e "- \033[1mviewlogs\033[0m: View system logs"
-    echo -e "- \033[1mtaillogs\033[0m: Tail system logs"
-    # ... (other commands)
-
     echo -e "\n\033[1;36mThreat Management/Protection Commands:\033[0m"
     echo -e "- \033[1mblockip <ip>\033[0m: Block an IP address"
     echo -e "- \033[1munblockip <ip>\033[0m: Unblock an IP address"
