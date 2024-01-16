@@ -132,7 +132,7 @@ alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove'
 alias search='apt search'
 alias editbash='vim ~/.bashrc'
-alias reloadbash='source ~/.bashrc'
+alias reloadbash='clear && source ~/.bashrc'
 
 # Network administration aliases
 alias ipinfo='curl ipinfo.io'  # Show public IP information
@@ -295,7 +295,7 @@ function systemloadgraph() {
 	set ytics nomirror
 	set style fill solid
 	plot "/tmp/loadavg.dat" using 2:xtic(1) with boxes title "Load Average"
-	GNUPLOT_SCRIPT
+GNUPLOT_SCRIPT
 
 	# Plot the graphs
 	gnuplot /tmp/loadavg.gp
