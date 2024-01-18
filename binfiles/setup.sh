@@ -40,7 +40,7 @@ if [ -d "$HOME/bash_aliases" ]; then
 	fetchrepo
 	installdeps
 	reloadshell
-	cleanup
+#	cleanup
 	sleep 2
 else
 	# Directory doesn't exist == business as usual
