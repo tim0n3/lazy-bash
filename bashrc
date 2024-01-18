@@ -115,22 +115,40 @@ PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
 
 # Custom functions
 
-directory_path="./bash_aliases"
+directory_path="$HOME/bash_aliases"
 
 # Check if the directory exists
 if [ -d "$directory_path" ]; then
     # Loop through each file in the directory
     for file in "$directory_path"/*; do
-		chmod +r $file
-        # Check if the file is a regular file and is readable
-        if [ -f "$file" ] && [ -r "$file" ]; then
-            # Source the file
-            source "$file"
+        # Output the current file being processed
+        echo "Processing file: $file"
+
+        # Check if the file is a regular file
+        if [ -f "$file" ]; then
+            # Check if the file is readable
+            if [ -r "$file" ]; then
+                # Output the permission change
+                echo "Changing permissions for $file"
+                chmod +r "$file"
+
+                # Source the file
+                echo "Sourcing $file"
+                source "$file"
+            else
+                # Output an error if the file is not readable
+                echo "Error: File not readable - $file"
+            fi
+        else
+            # Output an error if the file is not a regular file
+            echo "Error: Not a regular file - $file"
         fi
     done
 else
-    echo "Directory not found: $directory_path"
+    # Output an error if the directory does not exist
+    echo "Error: Directory not found - $directory_path"
 fi
+
 
 # Display neofetch, IP address, CPU load, uptime, and last reboot state when starting an interactive shell
 if [ -t 1 ]; then
