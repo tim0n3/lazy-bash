@@ -47,6 +47,6 @@ else
 	fetchrepo
 	installdeps
 	reloadshell
-	cleanup
+#	cleanup
 fi
 
