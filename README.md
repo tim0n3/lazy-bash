@@ -1,7 +1,6 @@
 # lazy-bash
 This is lazy-bash. I made this because I was tired of using the long commands required to administer linux systems. It's designed to be modular and extensible, making it simple for customizations to streamline common tasks
 
-- [lazy-bash](#lazy-bash)
   - [Features](#features)
     - [Prompt Customization](#prompt-customization)
     - [Aliases for Common Commands](#aliases-for-common-commands)
@@ -95,7 +94,7 @@ sudo apt-get install curl neofetch iptables net-tools gnuplot
 
 ## New method:
 
-- Ensure you are in your $HOME folder by typing `cd` and pressing `return`
+- Ensure you are in your `$HOME` folder by typing `cd` and pressing `return`
 - Verify your location by then typing `pwd` and pressing `return`. It should show your current directory as `/home/<your_username>`
 - Then proceed to run the following command.
 
