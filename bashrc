@@ -121,19 +121,20 @@ directory_path="$HOME/bash_aliases"
 if [ -d "$directory_path" ]; then
     # Loop through each file in the directory
     for file in "$directory_path"/*; do
-        # Output the current file being processed
-        echo "Processing file: $file"
+        # Uncomment to output the current file being processed
+        #echo "Processing file: $file"
 
         # Check if the file is a regular file
         if [ -f "$file" ]; then
             # Check if the file is readable
             if [ -r "$file" ]; then
-                # Output the permission change
-                echo "Changing permissions for $file"
+                # Uncomment to output the permission change
+                #echo "Changing permissions for $file"
                 chmod +r "$file"
 
                 # Source the file
-                echo "Sourcing $file"
+		# Uncomment to output sourcing the file
+                #echo "Sourcing $file"
                 source "$file"
             else
                 # Output an error if the file is not readable
