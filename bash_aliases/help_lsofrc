@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Function to print colorful help information with examples for specific lsof aliases
+help_lsof() {
+    case "$1" in
+        established)
+            echo -e "\n\033[1;32mAlias: lsof-established\033[0m"
+            echo -e "\033[1mDescription:\033[0m Lists established TCP connections."
+            echo -e "\033[1mExample:\033[0m lsof-established"
+            ;;
+        udp)
+            echo -e "\n\033[1;32mAlias: lsof-udp\033[0m"
+            echo -e "\033[1mDescription:\033[0m Lists UDP connections."
+            echo -e "\033[1mExample:\033[0m lsof-udp"
+            ;;
+        port)
+            echo -e "\n\033[1;32mAlias: lsof-port\033[0m"
+            echo -e "\033[1mDescription:\033[0m Lists processes using a specific port."
+            echo -e "\033[1mExample:\033[0m lsof-port 80"
+            ;;
+        listen)
+            echo -e "\n\033[1;32mAlias: lsof-listen\033[0m"
+            echo -e "\033[1mDescription:\033[0m Lists listening ports."
+            echo -e "\033[1mExample:\033[0m lsof-listen"
+            ;;
+        network)
+            echo -e "\n\033[1;32mAlias: lsof-network\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows network connections with associated processes."
+            echo -e "\033[1mExample:\033[0m lsof-network"
+            ;;
+        ipv4)
+            echo -e "\n\033[1;32mAlias: lsof-ipv4\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows only IPv4 network connections."
+            echo -e "\033[1mExample:\033[0m lsof-ipv4"
+            ;;
+        ipv6)
+            echo -e "\n\033[1;32mAlias: lsof-ipv6\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows only IPv6 network connections."
+            echo -e "\033[1mExample:\033[0m lsof-ipv6"
+            ;;
+        descriptor)
+            echo -e "\n\033[1;32mAlias: lsof-descriptor\033[0m"
+            echo -e "\033[1mDescription:\033[0m Displays detailed information about a specific file descriptor."
+            echo -e "\033[1mExample:\033[0m lsof-descriptor 3"
+            ;;
+        user_files)
+            echo -e "\n\033[1;32mAlias: lsof-user-files\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific user."
+            echo -e "\033[1mExample:\033[0m lsof-user-files username"
+            ;;
+        command_files)
+            echo -e "\n\033[1;32mAlias: lsof-command-files\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific command."
+            echo -e "\033[1mExample:\033[0m lsof-command-files sshd"
+            ;;
+        process_files)
+            echo -e "\n\033[1;32mAlias: lsof-process-files\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific process ID."
+            echo -e "\033[1mExample:\033[0m lsof-process-files 1234"
+            ;;
+        program_files)
+            echo -e "\n\033[1;32mAlias: lsof-program-files\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific program name."
+            echo -e "\033[1mExample:\033[0m lsof-program-files nginx"
+            ;;
+        user_process)
+            echo -e "\n\033[1;32mAlias: lsof-user-process\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific user and process name."
+            echo -e "\033[1mExample:\033[0m lsof-user-process username sshd"
+            ;;
+        directory)
+            echo -e "\n\033[1;32mAlias: lsof-directory\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific directory."
+            echo -e "\033[1mExample:\033[0m lsof-directory /path/to/directory"
+            ;;
+        device)
+            echo -e "\n\033[1;32mAlias: lsof-device\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows files opened by a specific device."
+            echo -e "\033[1mExample:\033[0m lsof-device /dev/sda1"
+            ;;
+        file_process)
+            echo -e "\n\033[1;32mAlias: lsof-file-process\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows process information for a specific file."
+            echo -e "\033[1mExample:\033[0m lsof-file-process /path/to/file.txt"
+            ;;
+        port_process)
+            echo -e "\n\033[1;32mAlias: lsof-port-process\033[0m"
+            echo -e "\033[1mDescription:\033[0m Shows process information for a specific port."
+            echo -e "\033[1mExample:\033[0m lsof-port-process 8080"
+            ;;
+        *)
+            echo -e "\n\033[1;31mUsage: help_lsof <alias_name>\033[0m"
+            echo -e "\033[1mAvailable aliases:\033[0m"
+            echo -e "  \033[1;34mestablished, udp, port, listen, network, ipv4, ipv6, descriptor,\033[0m"
+            echo -e "  \033[1;34muser_files, command_files, process_files, program_files, user_process,\033[0m"
+            echo -e "  \033[1;34mdirectory, device, file_process, port_process\033[0m"
+            ;;
+    esac
+}
