@@ -63,7 +63,7 @@ help() {
 
             echo -e "\n\033[1;36mUpdate and Upgrade Commands:\033[0m"
             echo -e "- \033[1msysupdate\033[0m: Update package lists"
-            echo -e "- \033[1msysupgrade\033[0m: Upgrade installed packages"
+            echo -e "- \033[1msysupgrade\033[0m: Upgrade system packages only."
             # ... (other commands)
 
             echo -e "\n\033[1;36mFile Management Commands:\033[0m"

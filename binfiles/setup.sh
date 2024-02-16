@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 dir="$HOME/lazy_bash"
 aliasdir="$HOME/bash_aliases"

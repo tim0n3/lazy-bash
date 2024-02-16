@@ -12,6 +12,10 @@ function stopservice() {
 	sudo systemctl stop $1
 }
 
+function statusservice() {
+	sudo systemctl status $1
+}
+
 function findfile() {
 	find . -type f -iname "*$1*"
 }

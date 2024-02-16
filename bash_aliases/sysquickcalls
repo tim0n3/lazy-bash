@@ -3,6 +3,8 @@
 # System shell aliases
 alias editbash='vim ~/.bashrc'
 alias reloadbash='clear && source ~/.bashrc'
+alias reload='clear && source ~/.bashrc'
+alias fullreload='clear && sudo systemctl daemon-reload && sudo systemctl restart collector && sudo systemctl restart pubsub && source ~/.bashrc && echo -e "\n Your terminal has been fully reloaded with all datasystem modules" || echo -e "\n fullreload has failed with exit code: $? \n"'
 
 # Network administration aliases
 alias ipinfo='curl ipinfo.io'  # Show public IP information
