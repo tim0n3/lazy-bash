@@ -10,8 +10,7 @@ function updatesystem() {
 function fullupgrade() {
 	echo "Updating system and user packages together..."
 	sudo apt-get update
-	sudo apt upgrade -y
-	sudo apt full-upgrade -y
+	sudo apt full-upgrade 
 }
 
 # Package management aliases
