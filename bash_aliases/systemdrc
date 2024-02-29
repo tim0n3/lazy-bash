@@ -1,17 +1,47 @@
 #!/bin/bash
 
 function restartservice() {
-	sudo systemctl restart $1
+        sudo systemctl restart $1
 }
 
+function restart() {
+        sudo systemctl restart $1
+}
+
+
 function startservice() {
-	sudo systemctl start $1
+        sudo systemctl start $1
+}
+
+function start() {
+        sudo systemctl start $1
+}
+
+function status() {
+        sudo systemctl status $1
+}
+
+
+function statusservice() {
+        sudo systemctl status $1
 }
 
 function stopservice() {
-	sudo systemctl stop $1
+        sudo systemctl stop $1
+}
+
+function stop() {
+        sudo systemctl stop $1
 }
 
 function findfile() {
-	find . -type f -iname "*$1*"
+        find . -type f -iname "*$1*"
+}
+
+function disable() {
+        sudo systemctl disable $1
+}
+
+function enable() {
+        sudo systemctl enable $1
 }

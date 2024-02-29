@@ -7,14 +7,20 @@ function updatesystem() {
 	sudo apt upgrade --without-new-pkgs
 }
 
+function fullupgrade() {
+	echo "Updating system and user packages together..."
+	sudo apt-get update
+	sudo apt full-upgrade 
+}
+
 # Package management aliases
 alias install='sudo apt install'
 alias remove='sudo apt remove'
 alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove'
 alias search='apt search'
-alias upgrades='apt list --upgradable'  # Show available package upgrades
-alias update='sudo apt update && sudo apt upgrade -y'
+alias showupgrades='apt list --upgradable'  # Show available package upgrades
+alias update='sudo apt update'
 alias fullupdate='sudo apt full-upgrade -y'  # Upgrade packages, including kernel packages
 alias showpackages='dpkg -l'  # Show installed packages
 alias showpackagefiles='dpkg -L'     # Show files installed by a package
