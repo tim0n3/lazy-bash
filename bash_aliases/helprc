@@ -131,8 +131,4 @@ help() {
     esac
 }
 
-# Examples of using the help function
-help blockip
-help sysupdate
-help unknown_command
-help --verbose
+echo -e "# Examples of using the help function\n\n h\n\033[1;36mhelp\033[0m blockip \n\n h\n\033[1;36mhelp\033[0m sysupdate \n\n h\n\033[1;36mhelp\033[0m unknown_command \n\n \033[0mhelp\033[0m --verbose
