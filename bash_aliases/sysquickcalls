@@ -7,12 +7,12 @@ alias reloadbash='clear && source ~/.bashrc'
 alias reloaddataloggerapp='clear && source ~/.bashrc && sudo systemctl daemon-reload && sudo systemctl restart collector.service && sudo systemctl restart pubsub.service'
 
 function fullreload() {
-	clear 
-	echo -e "use with caution!\n\n This will restart all systemd modules.\n\n use ctrl-c within 5 seconds to cancel.\n\n" 
-	sleep 5 
-	sudo systemctl daemon-reload 
-	sudo systemctl restart --all 
-	source ~/.bashrc 
+	clear
+	echo -e "use with caution!\n\n This will restart all datasystem systemd modules.\n\n use ctrl-c within 5 seconds to cancel.\n\n"
+	sleep 5
+	sudo systemctl daemon-reload
+	sudo systemctl restart collector pubsub
+	source ~/.bashrc
 	echo -e "\n Your terminal has been fully reloaded with all datasystem modules" \
 || echo -e "\n fullreload has failed with exit code: '$?' \n"
 }
