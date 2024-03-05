@@ -4,13 +4,13 @@
 function updatesystem() {
 	echo "Updating system packages without installing new packages..."
 	sudo apt-get update
-	sudo apt upgrade --without-new-pkgs
+	sudo apt upgrade --without-new-pkgs --no-install-recommends
 }
 
 function fullupgrade() {
 	echo "Updating system and user packages together..."
 	sudo apt-get update
-	sudo apt full-upgrade 
+	sudo apt full-upgrade
 }
 
 # Package management aliases
