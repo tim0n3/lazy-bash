@@ -54,7 +54,7 @@ installdeps() {
 	cat "$dir/bashrc" > "$HOME/.bashrc" || {
         error "Error: Failed to overwrite your .bashrc file."
     }
-    cd "$HOME" |1| exit 1
+    cd "$HOME" || exit 1
 }
 
 reloadshell() {
