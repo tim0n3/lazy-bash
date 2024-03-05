@@ -82,7 +82,7 @@ block-in-tcp() {
 
     # Add rule to iptables input chain
     if [[ -n $comment ]]; then
-        iptables -A INPUT -p tcp -m tcp --dport $port -j REJECT --reject-with tcp-reset -m comment --comment "$comment"
+        sudo iptables -A INPUT -p tcp -m tcp --dport $port -j REJECT --reject-with tcp-reset -m comment --comment "$comment"
         echo -e "\n\033[1;32mSuccess:\033[0m Added iptables rule to block TCP port $port with comment '$comment'"
 	# Print success message indicating the rule has been added
 	echo -e "\n\033[1;32mSuccess:\033[0m Added iptables rule to block TCP traffic on destination port $dport"
@@ -90,7 +90,7 @@ block-in-tcp() {
 	echo -e "\033[1;36mIncoming Rules:\033[0m"
 	sudo iptables -L INPUT -v -n --line-numbers
     else
-        iptables -A INPUT -p tcp -m tcp --dport $port -j REJECT --reject-with tcp-reset
+        sudo iptables -A INPUT -p tcp -m tcp --dport $port -j REJECT --reject-with tcp-reset
         echo -e "\n\033[1;32mSuccess:\033[0m Added iptables rule to block TCP port $port"
 	# Print success message indicating the rule has been added
 	echo -e "\n\033[1;32mSuccess:\033[0m Added iptables rule to block TCP traffic on destination port $dport"
@@ -119,19 +119,19 @@ block-fw-in-tcp() {
     # Parse arguments
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            --dport)
+            dport)
                 dport=$2
                 shift 2
                 ;;
-            --sport)
+            sport)
                 sport=$2
                 shift 2
                 ;;
-            --in-interface)
+            in-interface)
                 in_interface=$2
                 shift 2
                 ;;
-            --out-interface)
+            out-interface)
                 out_interface=$2
                 shift 2
                 ;;
@@ -154,7 +154,7 @@ block-fw-in-tcp() {
     fi
 
     # Construct the rule dynamically based on the provided arguments
-    local rule="iptables -A FORWARD -p tcp --dport $dport"
+    local rule="sudo iptables -A FORWARD -p tcp --dport $dport"
 
     # Append source port to the rule if provided
     [[ -n $sport ]] && rule+=" --sport $sport"
@@ -229,7 +229,7 @@ block-fw-out-tcp() {
     fi
 
     # Construct the rule dynamically based on the provided arguments
-    local rule="iptables -A FORWARD -p tcp"
+    local rule="sudo iptables -A FORWARD -p tcp"
 
     # Append source port to the rule if provided
     [[ -n $sport ]] && rule+=" --sport $sport"
