@@ -34,7 +34,7 @@ function stop() {
         sudo systemctl stop $1
 }
 
-function findfile() {
+function find() {
         find . -type f -iname "*$1*"
 }
 

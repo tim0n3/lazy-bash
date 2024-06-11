@@ -1,29 +1,30 @@
 #!/bin/bash
 
 # Function to update system packages without installing new packages
-function updatesystem() {
+function updatebasesystem() {
 	echo "Updating system packages without installing new packages..."
-	sudo apt-get update
+	sudo apt update
 	sudo apt upgrade --without-new-pkgs --no-install-recommends
 }
 
 function fullupgrade() {
 	echo "Updating system and user packages together..."
-	sudo apt-get update
+	sudo apt update
 	sudo apt full-upgrade
 }
 
 # Package management aliases
 alias install='sudo apt install'
 alias remove='sudo apt remove'
-alias purge='sudo apt purge'
+alias purge='remove'
 alias autoremove='sudo apt autoremove'
 alias search='apt search'
 alias showupgrades='apt list --upgradable'  # Show available package upgrades
-alias update='sudo apt update'
-alias fullupdate='sudo apt full-upgrade -y'  # Upgrade packages, including kernel packages
-alias showpackages='dpkg -l'  # Show installed packages
+alias updaterepo='sudo apt update'
+alias fullupdate='fullupgrade'  # Upgrade packages, including kernel packages
+alias showinstalledpkgs='dpkg -l'  # Show installed packages
+alias showpkgs='dpkg -l'  # Show installed packages
 alias showpackagefiles='dpkg -L'     # Show files installed by a package
-alias showsize='dpkg-query -W --showformat="\${Installed-Size;10}\t\${Package}\n" | sort -n'  # Show installed package sizes
+alias showpkgssize='dpkg-query -W --showformat="\${Installed-Size;10}\t\${Package}\n" | sort -n'  # Show installed package sizes
 
 
