@@ -70,16 +70,30 @@ postinstallcleanup() {
 	}
 }
 
-if [ -d "$HOME/bash_aliases" ]; then
+upgradebash() {
+	echo Upgrading bash
 	preinstallcleanup
 	fetchrepo
 	installdeps
 	reloadshell
 	postinstallcleanup
 	sleep 2
-else
+}
+
+freshinstall() {
+	echo Installing bash
 	fetchrepo
 	installdeps
 	reloadshell
 	postinstallcleanup
+}
+
+if [ -d "$HOME/bash_aliases" ]; then
+	upgradebash || {
+		error "Error: Failed to upgrade bash."
+	}
+else
+	freshinstall || {
+		error "Error: Failed to install bash."
+	}
 fi
