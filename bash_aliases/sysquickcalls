@@ -26,3 +26,87 @@ alias netstatl='sudo netstat -tulpn'  # List all listening ports
 alias cpuinfo='lscpu'
 alias meminfo='free -h'
 alias diskinfo='df -h'
+<<<<<<< Updated upstream
+=======
+
+# System admin functions
+
+backup_system() {
+	local dir_to_backup="/"
+	local backup_destination="/opt/backup"
+	local backup_log="/var/log"
+
+	configuration_directories=(
+		"/etc"
+		"/root/.config"
+		#"/home/$(whoami)/.config"
+	)
+
+	RESET='\033[0m'
+	RED='\033[0;31m'
+	GREEN='\033[0;32m'
+	YELLOW='\033[0;33m'
+	BLUE='\033[0;34m'
+
+	log() {
+		local level="$1"
+		local message="$2"
+		local color="$3"
+		echo -e "$(date +'%Y-%m-%d %H:%M:%S') [${color}${level}${RESET}]: ${color}${message}${RESET}" \
+			| tee -a "$backup_log/$(date +'%Y-%m-%d %H')_$level_system_backup.log"
+	}
+
+	exit_strategy() {
+		if [ $? -ne 0 ]; then
+			log error "Failed to create backup." "$RED"
+			exit 1
+		fi
+		}
+
+	create_backup() {
+		log debug "Creating directory structure as needed" "$BLUE"
+		mkdir -p "$backup_destination" || {
+			log error "Failed to create backup directory." "$RED" 
+		}
+
+		local backup_file="$backup_destination/backup_$(date +"%Y%m%d_%H%M%S").tar.gz"
+
+		existing_directories=() 
+		for each_directory in "${configuration_directories[@]}"; do
+			log debug "Processing directory: '$each_directory'" "$BLUE"
+			if [ -d "$each_directory" ]; then
+				existing_directories+=("$each_directory")
+				log debug "Directory '$each_directory' exists and will be included" "$BLUE"
+			else
+				log warning "Directory '$each_directory' does not exist and will be ignored." "$YELLOW"
+			fi
+		done
+
+		if [ ${#existing_directories[@]} -eq 0 ]; then
+			log error "No valid directories to backup." "$RED"
+			exit 1
+		fi
+
+		log debug "Directories to be backed up: ${existing_directories[*]}" "$BLUE"
+		sleep 5
+
+
+		tar -cvpzf "$backup_file" \
+			--acls \
+			--xattrs \
+			"${existing_directories[@]}" || { 
+				log error "Failed to create backup." "$RED"
+			}	
+
+		# Break script if tar fails.
+		exit_strategy
+
+		log success "Backup created successfully: $backup_file" "$GREEN"
+	}
+
+	create_backup || {
+		log error "Backup failed..." "$RED"
+	}
+
+}
+>>>>>>> Stashed changes
