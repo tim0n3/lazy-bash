@@ -117,60 +117,47 @@ PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
 
 directory_path="$HOME/bash_aliases"
 
-# Check if the directory exists
 if [ -d "$directory_path" ]; then
-    # Loop through each file in the directory
-    for file in "$directory_path"/*; do
-        # Uncomment to output the current file being processed
-        #echo "Processing file: $file"
+	for file in "$directory_path"/*; do
+		# Debug: Uncomment to output the current file being processed
+		#echo "Processing file: $file"
 
-        # Check if the file is a regular file
-        if [ -f "$file" ]; then
-            # Check if the file is readable
-            if [ -r "$file" ]; then
-                # Uncomment to output the permission change
-                #echo "Changing permissions for $file"
-                chmod +r "$file"
+	if [ -f "$file" ]; then
+		if [ -r "$file" ]; then
+			# Debug: Uncomment to output the permission change
+			#echo "Changing permissions for $file"
+			chmod +r "$file"
 
-                # Source the file
-		# Uncomment to output sourcing the file
-                #echo "Sourcing $file"
-                source "$file"
-            else
-                # Output an error if the file is not readable
-                echo "Error: File not readable - $file"
-            fi
-        else
-            # Output an error if the file is not a regular file
-            echo "Error: Not a regular file - $file"
-        fi
-    done
+		# Debug: Uncomment to output sourcing the file
+		#echo "Sourcing $file"
+		source "$file"
+	else
+		echo "Error: File not readable - $file"
+		fi
+	else
+		echo "Error: Not a regular file - $file"
+	fi
+done
 else
-    # Output an error if the directory does not exist
-    echo "Error: Directory not found - $directory_path"
+	echo "Error: Directory not found - $directory_path"
 fi
 
 
-# Display neofetch, IP address, CPU load, uptime, and last reboot state when starting an interactive shell
 if [ -t 1 ]; then
 	echo -e "\033[1m"
 	neofetch
 	echo -e "\033[0m"
 
-	# Display IP address
 	if [ -n "$SSH_CONNECTION" ]; then
 		echo -e "\n\033[1mSSH Connection IP:\033[0m $SSH_CLIENT"
 	elif [ -n "$CONSOLE" ]; then
 		echo -e "\n\033[1mConsole IP:\033[0m $(hostname -I)"
 	fi
 	
-	# Display CPU load
 	echo -e "\n\033[1mCPU Load:\033[0m $(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')%"
 
-	# Display system uptime
 	echo -e "\n\033[1mUptime:\033[0m $(uptime -p)"
 
-	# Display last reboot state
 	lastreboot=$(last reboot | grep -E "reboot" | head -n 1)
 	if [[ $lastreboot == *"(clean)"* ]]; then
 		echo -e "\033[1mLast Reboot State:\033[0m Clean"
@@ -178,7 +165,6 @@ if [ -t 1 ]; then
 		echo -e "\033[1mLast Reboot State:\033[0m Dirty"
 	fi
 
-	# Provide instructions to view various logs
 	echo -e "\n\033[1mTo view system logs, use:\033[0m viewsyslogs"
 	echo -e "\033[1mTo view specific application logs, use:\033[0m viewapplogs <application-name>"
 	echo -e "\033[1mTo view reboot logs, use:\033[0m viewrebootlogs"

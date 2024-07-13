@@ -4,19 +4,18 @@
 alias editbash='vim ~/.bashrc'
 #alias reloadbash='clear && source ~/.bashrc'
 alias reloadbash='clear && source ~/.bashrc'
-alias reloaddataloggerapp='clear && source ~/.bashrc && sudo systemctl daemon-reload && sudo systemctl restart collector.service && sudo systemctl restart pubsub.service'
+alias reloaddataloggerapp='clear && sudo systemctl daemon-reload && sudo systemctl restart collector.service && sudo systemctl restart pubsub.service'
 
 function fullreload() {
-	clear 
-	sudo systemctl daemon-reload 
-	sudo systemctl restart --all 
-	source ~/.bashrc 
+	clear
+	echo -e "use with caution!\n\n This will restart all datasystem systemd modules.\n\n use ctrl-c within 5 seconds to cancel.\n\n"
+	sleep 5
+	sudo systemctl daemon-reload
+	reloaddataloggerapp
+	source ~/.bashrc
 	echo -e "\n Your terminal has been fully reloaded with all datasystem modules" \
 || echo -e "\n fullreload has failed with exit code: '$?' \n"
 }
-
-# playing with 1-liner alias
-#alias fullreload='clear && echo -e "use with caution!\n\n This will restart all systemd modules.\n\n use ctrl-c to cancel.\n\n" && sleep 5 && source ~/.bashrc && sudo systemctl daemon-reload && sudo systemctl restart --all'
 
 # Network administration aliases
 alias ipinfo='curl ipinfo.io'  # Show public IP information
@@ -26,8 +25,6 @@ alias netstatl='sudo netstat -tulpn'  # List all listening ports
 alias cpuinfo='lscpu'
 alias meminfo='free -h'
 alias diskinfo='df -h'
-<<<<<<< Updated upstream
-=======
 
 # System admin functions
 
@@ -39,7 +36,7 @@ backup_system() {
 	configuration_directories=(
 		"/etc"
 		"/root/.config"
-		#"/home/$(whoami)/.config"
+		"/home/$(whoami)/.config"
 	)
 
 	RESET='\033[0m'
@@ -109,4 +106,3 @@ backup_system() {
 	}
 
 }
->>>>>>> Stashed changes

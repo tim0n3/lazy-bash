@@ -1,52 +1,99 @@
 #!/bin/env bash
 
+# Automated Installation Script
+# Author: [tim0n3]
+# Version: 1.0
+# Description: This script automates the process of installing lazy-bash on a system.
+#              It allows users to take a chill-pill while this script does it's magic,
+#              Error handling mechanisms are included to ensure smooth operation and logging
+#              of any encountered issues.
+
+# Uncomment the following line to enable debug output in the terminal.
+# set -x
+
 dir="$HOME/lazy_bash"
 aliasdir="$HOME/bash_aliases"
 
-function fetchrepo() {
-	# Clone git repo
-	echo -e "Preparing environment\n"
+log() {
+	local message="$1"
+	local log_file="/var/log/$(date +"%Y-%m-%d_%T")-install-security-updates-util.log"
+
+	echo "$(date +"%Y-%m-%d %T"): $message" >&2
+	echo "$(date +"%Y-%m-%d %T"): $message" >> "$log_file"
+
+}
+
+error() {
+	echo "$(date +"%Y-%m-%d %T"): Error: $1" >&2
+	log "Error: $1" >&2
+
+	exit 1
+}
+
+fetchrepo() {
+	log "Preparing environment\n"
 	sleep 1
-	echo -e "Fetching repo and installing shell overhaul.\n"
+	log "Fetching repo and installing shell overhaul.\n"
 	sleep 1
-	git clone https://github.com/tim0n3/lazy-bash.git "$dir" && cd "$dir" || exit 1
+	git clone https://github.com/tim0n3/lazy-bash.git "$dir" && cd "$dir" || {
+		error "Unable to fetch lazy-bash from git."
+	}
 }
 
-function installdeps() {
-	# Copy libraries to the user's home folder
-	cp -R "$dir/bash_aliases" "$HOME/"
-
-	# Overwrite the current .bashrc and load the new shell features
-	cat "$dir/bashrc" > "$HOME/.bashrc" && cd "$HOME" || exit 1
+installdeps() {
+	cp -R "$dir/bash_aliases" "$HOME/" || {
+		error "Error: Failed to copy bash_aliases directory."
+	}
+	cat "$dir/bashrc" > "$HOME/.bashrc" || {
+		error "Error: Failed to overwrite your .bashrc file."
+	}
+	cd "$HOME" || exit 1
 }
 
-function reloadshell() {
-	# Go $Home and reload the shell
-	source "$HOME/.bashrc"
+reloadshell() {
+	source "$HOME/.bashrc" || {
+		error "Error: Failed to source "$HOME/.bashrc" file."
+	}
 }
 
-function cleanup() {
-	# Remove detected folders with the same name as git repo
-	echo -e "Cleaning up leftovers\n"
-	rm -rf "$dir" "$aliasdir"
+preinstallcleanup() {
+	log "Cleaning up leftovers\n"
+	rm -rf "$dir" "$aliasdir" || {
+		error "preinstall_cleanup failed with"$?""
+	}
 }
 
-# Main function
-# Check ~/bash_aliases dir exists and cleanup else proceed \
-# with a normal installation:
-if [ -d "$HOME/bash_aliases" ]; then
-	# Directory exists == redownload
-	cleanup
+postinstallcleanup() {
+	log "Cleaning up leftovers\n"
+	rm -rf "$dir" || {
+		error "Failed to tidy up."
+	}
+}
+
+upgradebash() {
+	echo Upgrading bash
+	preinstallcleanup
 	fetchrepo
 	installdeps
 	reloadshell
-#	cleanup
+	postinstallcleanup
 	sleep 2
-else
-	# Directory doesn't exist == business as usual
+}
+
+freshinstall() {
+	echo Installing bash
 	fetchrepo
 	installdeps
 	reloadshell
-#	cleanup
-fi
+	postinstallcleanup
+}
 
+if [ -d "$HOME/bash_aliases" ]; then
+	upgradebash || {
+		error "Error: Failed to upgrade bash."
+	}
+else
+	freshinstall || {
+		error "Error: Failed to install bash."
+	}
+fi
