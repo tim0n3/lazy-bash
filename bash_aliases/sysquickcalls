@@ -33,6 +33,12 @@ backup_system() {
 	local backup_destination="/opt/backup"
 	local backup_log="/var/log"
 
+	configuration_directories=(
+		"/etc"
+		"/root/.config"
+		"/home/$(whoami)/.config"
+	)
+
 	RESET='\033[0m'
 	RED='\033[0;31m'
 	GREEN='\033[0;32m'
@@ -47,49 +53,56 @@ backup_system() {
 			| tee -a "$backup_log/$(date +'%Y-%m-%d %H')_$level_system_backup.log"
 	}
 
+	exit_strategy() {
+		if [ $? -ne 0 ]; then
+			log error "Failed to create backup." "$RED"
+			exit 1
+		fi
+		}
+
 	create_backup() {
-		#log debug "Creating directory structure as needed" "$BLUE"
+		log debug "Creating directory structure as needed" "$BLUE"
 		mkdir -p "$backup_destination" || {
 			log error "Failed to create backup directory." "$RED" 
 		}
 
 		local backup_file="$backup_destination/backup_$(date +"%Y%m%d_%H%M%S").tar.gz"
 
-		#log debug "Starting the system backup" "$BLUE"
+		existing_directories=() 
+		for each_directory in "${configuration_directories[@]}"; do
+			log debug "Processing directory: '$each_directory'" "$BLUE"
+			if [ -d "$each_directory" ]; then
+				existing_directories+=("$each_directory")
+				log debug "Directory '$each_directory' exists and will be included" "$BLUE"
+			else
+				log warning "Directory '$each_directory' does not exist and will be ignored." "$YELLOW"
+			fi
+		done
+
+		if [ ${#existing_directories[@]} -eq 0 ]; then
+			log error "No valid directories to backup." "$RED"
+			exit 1
+		fi
+
+		log debug "Directories to be backed up: ${existing_directories[*]}" "$BLUE"
+		sleep 5
+
+
 		tar -cvpzf "$backup_file" \
-			--exclude="$backup_file" \
-			--exclude=/boot \
-			--exclude=/opt \
-			--exclude=/proc \
-			--exclude=/tmp \
-			--exclude=/mnt \
-			--exclude=/dev \
-			--exclude=/sys \
-			--exclude=/srv \
-			--exclude=/run \
-			--exclude=/lib \
-			--exclude=/media \
-			--exclude=/var \
-			--exclude=/usr \
-			--exclude=/bin \
-			--exclude=/sbin \
-			--exclude=/lost+found \
-			--exclude=/home \
-			--exclude=/root \
-			--one-file-system \
 			--acls \
 			--xattrs \
-			"$dir_to_backup" || {
-				log error "Failed to create backup." "$RED" 
-			}
+			"${existing_directories[@]}" || { 
+				log error "Failed to create backup." "$RED"
+			}	
 
-		log success "Backup created successfully: $backup_file" "$GREEN" 
+		# Break script if tar fails.
+		exit_strategy
 
+		log success "Backup created successfully: $backup_file" "$GREEN"
 	}
 
 	create_backup || {
-		log error "Backup folder creation failed..." "$RED"
+		log error "Backup failed..." "$RED"
 	}
+
 }
-
-
