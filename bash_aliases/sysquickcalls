@@ -36,7 +36,7 @@ backup_system() {
 	configuration_directories=(
 		"/etc"
 		"/root/.config"
-		"/home/$(whoami)/.config"
+		#"/home/$(whoami)/.config"
 	)
 
 	RESET='\033[0m'
