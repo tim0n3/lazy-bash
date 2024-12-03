@@ -112,6 +112,26 @@ if ! shopt -oq posix; then
 		. /etc/bash_completion
 	fi
 fi
+
+# Global Alias Autocomplete
+
+shopt -s expand_aliases
+
+_generic_alias_completion() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local alias_name="${COMP_WORDS[0]}"
+    case "$alias_name" in
+        filesearch) COMPREPLY=( $(compgen -f -- "$cur") ) ;; # Autocomplete filenames
+        viewapplogs) COMPREPLY=( $(compgen -W "$(systemctl list-units --type=service --no-pager --plain --no-legend | awk '{print $1}')" -- "$cur") ) ;;
+        helpcmd) COMPREPLY=( $(compgen -W "filesearch bigfiles showhidden editfile extract compress home cd.. .. ... .... ..... bd rmd viewsyslogs viewapplogs viewrebootlogs viewwarninglogs viewerrorlogs viewauthlogs lsof-established lsof-udp lsof-port lsof-listen lsof-network lsof-ipv4 lsof-ipv6 install remove purge autoremove search showupgrades updaterepo fullupdate showinstalledpkgs showpkgs showpackagefiles showpkgssize ipinfo netstatl cpuinfo meminfo diskinfo editbash reloadbash fullreload" -- "$cur") ) ;;
+        *) COMPREPLY=() ;;
+    esac
+}
+
+# Bind to all aliases
+complete -F _generic_alias_completion filesearch viewapplogs helpcmd
+
+
 # ~/.bashrc
 
 # Customize the prompt to show current user, host, and current directory
