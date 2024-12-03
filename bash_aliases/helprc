@@ -1,54 +1,76 @@
 #!/bin/bash
 
 function helpcmd() {
-    case $1 in
+    local command=$1
+
+    # Format output
+    print_help() {
+        echo -e "\n=== HELP: $1 ==="
+        echo -e "Description: $2"
+        echo -e "Syntax: $3"
+        echo -e "Example: $4"
+        echo
+    }
+
+    # Main 
+    case $command in
         filesearch)
-            echo -e "filesearch: Search for files by name."
-            echo -e "Syntax: filesearch <filename-pattern>"
-            echo -e "Example: filesearch '*.txt'"
+            print_help "filesearch" \
+                "Search for files by name." \
+                "filesearch <filename-pattern>" \
+                "filesearch '*.txt'"
             ;;
         bigfiles)
-            echo -e "bigfiles: List largest files in the current directory."
-            echo -e "Syntax: bigfiles"
-            echo -e "Example: bigfiles"
+            print_help "bigfiles" \
+                "List largest files in the current directory." \
+                "bigfiles" \
+                "bigfiles"
             ;;
         showhidden)
-            echo -e "showhidden: Show hidden files and directories."
-            echo -e "Syntax: showhidden"
-            echo -e "Example: showhidden"
+            print_help "showhidden" \
+                "Show hidden files and directories." \
+                "showhidden" \
+                "showhidden"
             ;;
         editfile)
-            echo -e "editfile: Open a file for editing."
-            echo -e "Syntax: editfile <filename>"
-            echo -e "Example: editfile example.txt"
+            print_help "editfile" \
+                "Open a file for editing." \
+                "editfile <filename>" \
+                "editfile example.txt"
             ;;
         extract)
-            echo -e "extract: Extract a tar.gz archive."
-            echo -e "Syntax: extract <archive.tar.gz>"
-            echo -e "Example: extract archive.tar.gz"
+            print_help "extract" \
+                "Extract a tar.gz archive." \
+                "extract <archive.tar.gz>" \
+                "extract archive.tar.gz"
             ;;
         compress)
-            echo -e "compress: Create a tar.gz archive."
-            echo -e "Syntax: compress <output.tar.gz> <files/directories>"
-            echo -e "Example: compress backup.tar.gz myfolder/"
+            print_help "compress" \
+                "Create a tar.gz archive." \
+                "compress <output.tar.gz> <files/directories>" \
+                "compress backup.tar.gz myfolder/"
             ;;
         home|cd..|..|...|....|.....)
-            echo -e "$1: Navigate directories."
-            echo -e "Syntax: $1 (no additional arguments)"
-            echo -e "Example: $1"
+            print_help "$command" \
+                "Navigate directories." \
+                "$command" \
+                "$command"
             ;;
         bd)
-            echo -e "bd: Return to the previous directory."
-            echo -e "Syntax: bd"
-            echo -e "Example: bd"
+            print_help "bd" \
+                "Return to the previous directory." \
+                "bd" \
+                "bd"
             ;;
         rmd)
-            echo -e "rmd: Remove a directory and all files."
-            echo -e "Syntax: rmd <directory>"
-            echo -e "Example: rmd tempfolder/"
+            print_help "rmd" \
+                "Remove a directory and all files within it." \
+                "rmd <directory>" \
+                "rmd tempfolder/"
             ;;
         viewsyslogs|viewapplogs|viewrebootlogs|viewwarninglogs|viewerrorlogs|viewauthlogs)
-            case $1 in
+            local desc syntax example
+            case $command in
                 viewsyslogs) desc="View system logs"; syntax="viewsyslogs"; example="viewsyslogs";;
                 viewapplogs) desc="View logs for a specific application"; syntax="viewapplogs <application-name>"; example="viewapplogs apache2";;
                 viewrebootlogs) desc="View reboot logs"; syntax="viewrebootlogs"; example="viewrebootlogs";;
@@ -56,12 +78,11 @@ function helpcmd() {
                 viewerrorlogs) desc="View error logs"; syntax="viewerrorlogs"; example="viewerrorlogs";;
                 viewauthlogs) desc="View authentication logs"; syntax="viewauthlogs"; example="viewauthlogs";;
             esac
-            echo -e "$1: $desc."
-            echo -e "Syntax: $syntax"
-            echo -e "Example: $example"
+            print_help "$command" "$desc" "$syntax" "$example"
             ;;
-        lsof-established|lsof-udp|lsof-port|lsof-listen|lsof-network|lsof-ipv4|lsof-ipv6)
-            case $1 in
+        lsof-*)
+            local desc syntax example
+            case $command in
                 lsof-established) desc="List established TCP connections"; syntax="lsof-established"; example="lsof-established";;
                 lsof-udp) desc="List UDP connections"; syntax="lsof-udp"; example="lsof-udp";;
                 lsof-port) desc="List processes using a specific port"; syntax="lsof-port <port-number>"; example="lsof-port 80";;
@@ -70,12 +91,11 @@ function helpcmd() {
                 lsof-ipv4) desc="Show only IPv4 network connections"; syntax="lsof-ipv4"; example="lsof-ipv4";;
                 lsof-ipv6) desc="Show only IPv6 network connections"; syntax="lsof-ipv6"; example="lsof-ipv6";;
             esac
-            echo -e "$1: $desc."
-            echo -e "Syntax: $syntax"
-            echo -e "Example: $example"
+            print_help "$command" "$desc" "$syntax" "$example"
             ;;
         install|remove|purge|autoremove|search|showupgrades|updaterepo|fullupdate|showinstalledpkgs|showpkgs|showpackagefiles|showpkgssize)
-            case $1 in
+            local desc syntax example
+            case $command in
                 install) desc="Install a package"; syntax="install <package-name>"; example="install vim";;
                 remove|purge) desc="Remove a package"; syntax="remove <package-name>"; example="remove vim";;
                 autoremove) desc="Remove unused dependencies"; syntax="autoremove"; example="autoremove";;
@@ -83,16 +103,15 @@ function helpcmd() {
                 showupgrades) desc="Show available upgrades"; syntax="showupgrades"; example="showupgrades";;
                 updaterepo) desc="Update package lists"; syntax="updaterepo"; example="updaterepo";;
                 fullupdate) desc="Upgrade all packages"; syntax="fullupdate"; example="fullupdate";;
-                showinstalledpkgs|showpkgs) desc="List installed packages"; syntax="$1"; example="$1";;
+                showinstalledpkgs|showpkgs) desc="List installed packages"; syntax="$command"; example="$command";;
                 showpackagefiles) desc="Show files installed by a package"; syntax="showpackagefiles <package-name>"; example="showpackagefiles vim";;
                 showpkgssize) desc="Display package sizes"; syntax="showpkgssize"; example="showpkgssize";;
             esac
-            echo -e "$1: $desc."
-            echo -e "Syntax: $syntax"
-            echo -e "Example: $example"
+            print_help "$command" "$desc" "$syntax" "$example"
             ;;
         ipinfo|netstatl|cpuinfo|meminfo|diskinfo|editbash|reloadbash|fullreload)
-            case $1 in
+            local desc syntax example
+            case $command in
                 ipinfo) desc="Show public IP information"; syntax="ipinfo"; example="ipinfo";;
                 netstatl) desc="List all listening ports"; syntax="netstatl"; example="netstatl";;
                 cpuinfo) desc="Show CPU information"; syntax="cpuinfo"; example="cpuinfo";;
@@ -102,23 +121,24 @@ function helpcmd() {
                 reloadbash) desc="Reload bash configuration"; syntax="reloadbash"; example="reloadbash";;
                 fullreload) desc="Fully reload terminal and services"; syntax="fullreload"; example="fullreload";;
             esac
-            echo -e "$1: $desc."
-            echo -e "Syntax: $syntax"
-            echo -e "Example: $example"
+            print_help "$command" "$desc" "$syntax" "$example"
             ;;
         "")
-            echo -e "Available Commands (Use 'helpcmd <command>' for details):"
-            echo -e "File Management: filesearch, bigfiles, showhidden, editfile"
-            echo -e "Archive Management: extract, compress"
-            echo -e "Directory Navigation: home, cd.., .., ..., ...., ....."
-            echo -e "System Logs: viewsyslogs, viewapplogs, viewrebootlogs, viewwarninglogs, viewerrorlogs, viewauthlogs"
-            echo -e "Network Tools: ipinfo, netstatl, lsof-*"
-            echo -e "Package Management: install, remove, purge, autoremove, search, showupgrades, updaterepo, fullupdate"
-            echo -e "System Info: cpuinfo, meminfo, diskinfo"
-            echo -e "Shell Management: editbash, reloadbash, fullreload"
+            echo -e "\n=== HELP MENU ==="
+            echo -e "Use 'helpcmd <command>' to get detailed help on a specific command.\n"
+            echo -e "Categories of Commands:"
+            echo -e "1. File Management: filesearch, bigfiles, showhidden, editfile"
+            echo -e "2. Archive Management: extract, compress"
+            echo -e "3. Directory Navigation: home, cd.., .., ..., ...., ....., bd, rmd"
+            echo -e "4. Logs: viewsyslogs, viewapplogs, viewrebootlogs, viewwarninglogs, viewerrorlogs, viewauthlogs"
+            echo -e "5. Network: ipinfo, netstatl, lsof-*"
+            echo -e "6. Package Management: install, remove, search, autoremove, fullupdate, updaterepo, showupgrades"
+            echo -e "7. System Info: cpuinfo, meminfo, diskinfo"
+            echo -e "8. Shell Tools: editbash, reloadbash, fullreload"
+            echo
             ;;
         *)
-            echo "Error: Unknown command '$1'. Use 'helpcmd' to list available commands."
+            echo -e "\nError: Unknown command '$command'. Use 'helpcmd' to list available commands."
             ;;
     esac
 }
