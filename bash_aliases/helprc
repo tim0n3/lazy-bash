@@ -123,6 +123,38 @@ function helpcmd() {
             esac
             print_help "$command" "$desc" "$syntax" "$example"
             ;;
+
+    	firewall|viewfirewall|block-in-tcp|block-fw-in-tcp|block-fw-out-tcp)
+	    local desc syntax example
+	    case $command in
+		    firewall) 
+			    desc="Firewall commands: ===HELP MENU==="
+			    syntax="viewfirewall, block-in-tcp <port> [comment <comment>]" 
+			    example="viewfirewall OR block-in-tcp 22 comment 'Block SSH access'"
+			    ;;
+		    viewfirewall) 
+			    desc="View all iptables firewall rules with color formatting."
+			    syntax="viewfirewall" 
+			    example="viewfirewall"
+			    ;;
+		    block-in-tcp) 
+			    desc="Block incoming TCP traffic to the host device on a specific port."
+			    syntax="block-in-tcp <port> [comment <comment>]"
+			    example="block-in-tcp 22 comment 'Block SSH access'"
+			    ;;
+		    block-fw-in-tcp) 
+			    desc="Block incoming TCP traffic to a specific destination port through the firewall."
+			    syntax="block-fw-in-tcp dport <port> in-interface <interface> [sport <port>] [out-interface <interface>] [comment <comment>]"
+			    example="block-fw-in-tcp dport 443 in-interface eth0 comment 'Block HTTPS traffic to internal network'"
+			    ;;
+		    block-fw-out-tcp) 
+			    desc="Block outgoing TCP traffic from a specific source port through the firewall."
+			    syntax="block-fw-out-tcp --sport <port> --out-interface <interface> [--dport <port>] [--in-interface <interface>] [comment <comment>]"
+			    example="block-fw-out-tcp --sport 80 --out-interface eth0 comment 'Block outgoing HTTP traffic from LAN'"
+			    ;;
+	    esac
+            print_help "$command" "$desc" "$syntax" "$example"
+            ;;
         "")
             echo -e "\n=== HELP MENU ==="
             echo -e "Use 'helpcmd <command>' to get detailed help on a specific command.\n"
@@ -135,6 +167,7 @@ function helpcmd() {
             echo -e "6. Package Management: install, remove, search, autoremove, fullupdate, updaterepo, showupgrades"
             echo -e "7. System Info: cpuinfo, meminfo, diskinfo"
             echo -e "8. Shell Tools: editbash, reloadbash, fullreload"
+            echo -e "9. Firewall: viewfirewall, block-in-tcp, block-fw-in-tcp, block-fw-out-tcp"
             echo
             ;;
         *)
