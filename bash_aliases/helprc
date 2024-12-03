@@ -1,134 +1,124 @@
 #!/bin/bash
 
-# Function to print colorful help information for various commands
-help() {
-    case "$1" in
-        blockip)
-            echo -e "\n\033[1;36mThreat Management/Protection Commands:\033[0m"
-            echo -e "- \033[1mblockip <ip>\033[0m: Block an IP address"
+function helpcmd() {
+    case $1 in
+        filesearch)
+            echo -e "filesearch: Search for files by name."
+            echo -e "Syntax: filesearch <filename-pattern>"
+            echo -e "Example: filesearch '*.txt'"
             ;;
-        unblockip)
-            echo -e "- \033[1munblockip <ip>\033[0m: Unblock an IP address"
+        bigfiles)
+            echo -e "bigfiles: List largest files in the current directory."
+            echo -e "Syntax: bigfiles"
+            echo -e "Example: bigfiles"
             ;;
-        systeminfo)
-            echo -e "\n\033[1;36mSystem Information Commands:\033[0m"
-            echo -e "- \033[1msysteminfo\033[0m: Display system information"
-            # ... (other commands)
+        showhidden)
+            echo -e "showhidden: Show hidden files and directories."
+            echo -e "Syntax: showhidden"
+            echo -e "Example: showhidden"
             ;;
-        sysupdate)
-            echo -e "\n\033[1;36mUpdate and Upgrade Commands:\033[0m"
-            echo -e "- \033[1msysupdate\033[0m: Update package lists"
+        editfile)
+            echo -e "editfile: Open a file for editing."
+            echo -e "Syntax: editfile <filename>"
+            echo -e "Example: editfile example.txt"
             ;;
-        sysupgrade)
-            echo -e "- \033[1msysupgrade\033[0m: Upgrade installed packages"
-            # ... (other commands)
+        extract)
+            echo -e "extract: Extract a tar.gz archive."
+            echo -e "Syntax: extract <archive.tar.gz>"
+            echo -e "Example: extract archive.tar.gz"
             ;;
-        ls)
-            echo -e "\n\033[1;36mFile Management Commands:\033[0m"
-            echo -e "- \033[1mls\033[0m: List files with color highlighting"
+        compress)
+            echo -e "compress: Create a tar.gz archive."
+            echo -e "Syntax: compress <output.tar.gz> <files/directories>"
+            echo -e "Example: compress backup.tar.gz myfolder/"
             ;;
-        ll)
-            echo -e "- \033[1mll\033[0m: List detailed information about files"
-            # ... (other commands)
+        home|cd..|..|...|....|.....)
+            echo -e "$1: Navigate directories."
+            echo -e "Syntax: $1 (no additional arguments)"
+            echo -e "Example: $1"
             ;;
-
-        update)
-            echo -e "\n\033[1;36mSystem Management Commands:\033[0m"
-            echo -e "- \033[1mupdate\033[0m: Update package lists and upgrade installed packages"
+        bd)
+            echo -e "bd: Return to the previous directory."
+            echo -e "Syntax: bd"
+            echo -e "Example: bd"
             ;;
-        install)
-            echo -e "- \033[1minstall\033[0m: Install a package"
-            # ... (other commands)
+        rmd)
+            echo -e "rmd: Remove a directory and all files."
+            echo -e "Syntax: rmd <directory>"
+            echo -e "Example: rmd tempfolder/"
             ;;
-        showpackages)
-            echo -e "\n\033[1;36mPackage Management Commands:\033[0m"
-            echo -e "- \033[1mshowpackages\033[0m: Show installed packages"
-            # ... (other commands)
+        viewsyslogs|viewapplogs|viewrebootlogs|viewwarninglogs|viewerrorlogs|viewauthlogs)
+            case $1 in
+                viewsyslogs) desc="View system logs"; syntax="viewsyslogs"; example="viewsyslogs";;
+                viewapplogs) desc="View logs for a specific application"; syntax="viewapplogs <application-name>"; example="viewapplogs apache2";;
+                viewrebootlogs) desc="View reboot logs"; syntax="viewrebootlogs"; example="viewrebootlogs";;
+                viewwarninglogs) desc="View warning logs"; syntax="viewwarninglogs"; example="viewwarninglogs";;
+                viewerrorlogs) desc="View error logs"; syntax="viewerrorlogs"; example="viewerrorlogs";;
+                viewauthlogs) desc="View authentication logs"; syntax="viewauthlogs"; example="viewauthlogs";;
+            esac
+            echo -e "$1: $desc."
+            echo -e "Syntax: $syntax"
+            echo -e "Example: $example"
             ;;
-        viewsyslogs)
-            echo -e "\n\033[1;36mLogging and Analysis Commands:\033[0m"
-            echo -e "- \033[1mviewsyslogs\033[0m: View system logs"
-            # ... (other commands)
+        lsof-established|lsof-udp|lsof-port|lsof-listen|lsof-network|lsof-ipv4|lsof-ipv6)
+            case $1 in
+                lsof-established) desc="List established TCP connections"; syntax="lsof-established"; example="lsof-established";;
+                lsof-udp) desc="List UDP connections"; syntax="lsof-udp"; example="lsof-udp";;
+                lsof-port) desc="List processes using a specific port"; syntax="lsof-port <port-number>"; example="lsof-port 80";;
+                lsof-listen) desc="List listening ports"; syntax="lsof-listen"; example="lsof-listen";;
+                lsof-network) desc="Show network connections with associated processes"; syntax="lsof-network"; example="lsof-network";;
+                lsof-ipv4) desc="Show only IPv4 network connections"; syntax="lsof-ipv4"; example="lsof-ipv4";;
+                lsof-ipv6) desc="Show only IPv6 network connections"; syntax="lsof-ipv6"; example="lsof-ipv6";;
+            esac
+            echo -e "$1: $desc."
+            echo -e "Syntax: $syntax"
+            echo -e "Example: $example"
             ;;
-
-        ?)
-            echo -e "\n\033[1;36mThreat Management/Protection Commands:\033[0m"
-            echo -e "- \033[1mblockip <ip>\033[0m: Block an IP address"
-            echo -e "- \033[1munblockip <ip>\033[0m: Unblock an IP address"
-            # ... (other commands)
-
-            echo -e "\n\033[1;36mSystem Information Commands:\033[0m"
-            echo -e "- \033[1msysteminfo\033[0m: Display system information"
-            # ... (other commands)
-
-            echo -e "\n\033[1;36mUpdate and Upgrade Commands:\033[0m"
-            echo -e "- \033[1msysupdate\033[0m: Update package lists"
-            echo -e "- \033[1msysupgrade\033[0m: Upgrade system packages only."
-            # ... (other commands)
-
-            echo -e "\n\033[1;36mFile Management Commands:\033[0m"
-            echo -e "- \033[1mls\033[0m: List files with color highlighting"
-            echo -e "- \033[1mll\033[0m: List detailed information about files"
-            echo -e "- \033[1mla\033[0m: List all files, including hidden ones"
-            echo -e "- \033[1ml\033[0m: List files in a compact format"
-            echo -e "- \033[1mfilesearch\033[0m: Search for files by name"
-            echo -e "- \033[1mbigfiles\033[0m: List largest files in the current directory"
-            echo -e "- \033[1mshowhidden\033[0m: Show hidden files and directories"
-            echo -e "- \033[1meditfile\033[0m: Open a text file for editing with nano"
-            echo -e "- \033[1mextract\033[0m: Extract files from a tar.gz archive"
-            echo -e "- \033[1mcompress\033[0m: Create a tar.gz archive"
-
-            echo -e "\n\033[1;36mSystem Management Commands:\033[0m"
-            echo -e "- \033[1mupdate\033[0m: Update package lists and upgrade installed packages"
-            echo -e "- \033[1minstall\033[0m: Install a package"
-            echo -e "- \033[1mremove\033[0m: Remove a package"
-            echo -e "- \033[1mpurge\033[0m: Remove a package along with its configuration files"
-            echo -e "- \033[1mautoremove\033[0m: Remove packages that are no longer needed"
-            echo -e "- \033[1msearch\033[0m: Search for a package"
-            echo -e "- \033[1meditbash\033[0m: Open the .bashrc file for editing"
-            echo -e "- \033[1mreloadbash\033[0m: Reload the .bashrc file"
-            echo -e "- \033[1mipinfo\033[0m: Show public IP information"
-            echo -e "- \033[1mnetstatl\033[0m: List all listening ports"
-            echo -e "- \033[1mcpuinfo\033[0m: Show CPU information"
-            echo -e "- \033[1mmeminfo\033[0m: Show memory information"
-            echo -e "- \033[1mdiskinfo\033[0m: Show disk space information"
-            echo -e "- \033[1msystemloadgraph\033[0m: Generate system load graphs for the last 5, 10, and 15 minutes"
-            echo -e "- \033[1mupdatesystem\033[0m: Update system packages without installing new packages"
-            echo -e "- \033[1mviewconnections\033[0m: View all current network connections (including direction)"
-            echo -e "- \033[1mviewfirewall\033[0m: View all iptables firewall rules with color formatting"
-            echo -e "- \033[1mviewnftfirewall\033[0m: View all nftables firewall rules with color formatting"
-            echo -e "- \033[1mstartservice <service-name>\033[0m: Start a specific service"
-            echo -e "- \033[1mstopservice <service-name>\033[0m: Stop a specific service"
-            echo -e "- \033[1mrestartservice <service-name>\033[0m: Restart a specific service"
-            echo -e "- \033[1mstatusservice <service-name>\033[0m: Check the status of a specific service"
-
-            echo -e "\n\033[1;36mPackage Management Commands:\033[0m"
-            echo -e "- \033[1mshowpackages\033[0m: Show installed packages"
-            echo -e "- \033[1mshowpackagefiles\033[0m: Show files installed by a package"
-            echo -e "- \033[1mshowsize\033[0m: Show installed package sizes"
-            echo -e "- \033[1mupgrades\033[0m: Show available package upgrades"
-            echo -e "- \033[1mfullupdate\033[0m: Upgrade packages, including kernel packages"
-
-            echo -e "\n\033[1;36mLogging and Analysis Commands:\033[0m"
-            echo -e "- \033[1mviewsyslogs\033[0m: View system logs"
-            echo -e "- \033[1mviewapplogs\033[0m: View specific application logs (Usage: viewapplogs <application-name>)"
-            echo -e "- \033[1mviewrebootlogs\033[0m: View reboot logs"
-            echo -e "- \033[1mviewwarninglogs\033[0m: View warning logs"
-            echo -e "- \033[1mviewerrorlogs\033[0m: View error logs"
-            echo -e "- \033[1mviewauthlogs\033[0m: View authentication logs"
-
-            if [[ $2 == "--verbose" ]]; then
-                echo -e "\n\033[1;36mVerbose Mode:\033[0m"
-                echo -e "Use the --verbose switch to display additional details for each command."
-            fi
-
-            echo -e "\n\033[1;36mHelp Commands:\033[0m"
-            echo -e "- \033[1mhelp\033[0m: Display this help message\n"
+        install|remove|purge|autoremove|search|showupgrades|updaterepo|fullupdate|showinstalledpkgs|showpkgs|showpackagefiles|showpkgssize)
+            case $1 in
+                install) desc="Install a package"; syntax="install <package-name>"; example="install vim";;
+                remove|purge) desc="Remove a package"; syntax="remove <package-name>"; example="remove vim";;
+                autoremove) desc="Remove unused dependencies"; syntax="autoremove"; example="autoremove";;
+                search) desc="Search for a package"; syntax="search <package-name>"; example="search vim";;
+                showupgrades) desc="Show available upgrades"; syntax="showupgrades"; example="showupgrades";;
+                updaterepo) desc="Update package lists"; syntax="updaterepo"; example="updaterepo";;
+                fullupdate) desc="Upgrade all packages"; syntax="fullupdate"; example="fullupdate";;
+                showinstalledpkgs|showpkgs) desc="List installed packages"; syntax="$1"; example="$1";;
+                showpackagefiles) desc="Show files installed by a package"; syntax="showpackagefiles <package-name>"; example="showpackagefiles vim";;
+                showpkgssize) desc="Display package sizes"; syntax="showpkgssize"; example="showpkgssize";;
+            esac
+            echo -e "$1: $desc."
+            echo -e "Syntax: $syntax"
+            echo -e "Example: $example"
+            ;;
+        ipinfo|netstatl|cpuinfo|meminfo|diskinfo|editbash|reloadbash|fullreload)
+            case $1 in
+                ipinfo) desc="Show public IP information"; syntax="ipinfo"; example="ipinfo";;
+                netstatl) desc="List all listening ports"; syntax="netstatl"; example="netstatl";;
+                cpuinfo) desc="Show CPU information"; syntax="cpuinfo"; example="cpuinfo";;
+                meminfo) desc="Show memory usage"; syntax="meminfo"; example="meminfo";;
+                diskinfo) desc="Show disk usage"; syntax="diskinfo"; example="diskinfo";;
+                editbash) desc="Edit bash configuration"; syntax="editbash"; example="editbash";;
+                reloadbash) desc="Reload bash configuration"; syntax="reloadbash"; example="reloadbash";;
+                fullreload) desc="Fully reload terminal and services"; syntax="fullreload"; example="fullreload";;
+            esac
+            echo -e "$1: $desc."
+            echo -e "Syntax: $syntax"
+            echo -e "Example: $example"
+            ;;
+        "")
+            echo -e "Available Commands (Use 'helpcmd <command>' for details):"
+            echo -e "File Management: filesearch, bigfiles, showhidden, editfile"
+            echo -e "Archive Management: extract, compress"
+            echo -e "Directory Navigation: home, cd.., .., ..., ...., ....."
+            echo -e "System Logs: viewsyslogs, viewapplogs, viewrebootlogs, viewwarninglogs, viewerrorlogs, viewauthlogs"
+            echo -e "Network Tools: ipinfo, netstatl, lsof-*"
+            echo -e "Package Management: install, remove, purge, autoremove, search, showupgrades, updaterepo, fullupdate"
+            echo -e "System Info: cpuinfo, meminfo, diskinfo"
+            echo -e "Shell Management: editbash, reloadbash, fullreload"
             ;;
         *)
-            echo -e "\n\033[1;31mCommand not recognized. Use 'help <command>' for more information.\033[0m"
-	    echo -e "# Examples of using the help function\n \n\033[1;36mhelp\033[0m blockip \n \n\033[1;36mhelp\033[0m sysupdate \n \n\033[1;36mhelp\033[0m unknown_command \n \n\033[1;36mhelp\033[0m --verbose"
+            echo "Error: Unknown command '$1'. Use 'helpcmd' to list available commands."
             ;;
     esac
 }
-
