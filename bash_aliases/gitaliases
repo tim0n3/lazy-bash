@@ -1,0 +1,117 @@
+#!/bin/bash
+
+
+# Git Aliases for Bash Terminal
+
+# Display help file
+
+githelp() {
+  if [[ "$1" == "help" ]]; then
+    cat ~/bash_aliases/githelp
+  else
+    command git "$@"
+  fi
+}
+
+
+# Status and Log
+alias gst="git status"
+alias gla="git log --oneline --graph --all --decorate"
+alias gls="git log --stat"
+alias gdf="git diff"
+alias gdc="git diff --cached"
+alias gl="git log --oneline"
+
+# Add, Commit, and Amend
+alias ga="git add"
+alias gau="git add -u"
+alias gaa="git add ."
+alias gca="git commit --amend --no-edit"
+
+# Git commit function
+# :: This command is meant to be invoked as 'gc' only.
+# :: You will be prompted on the next line for commit -
+# :: message.
+# :: Commit message doesn't have to be within "quotes."
+function gc() {
+    # Prompt for a commit message interactively
+    read -p "Enter your commit message: " message
+
+    # Check if the message is empty
+    if [ -z "$message" ]; then
+        echo "Error: Commit message cannot be empty."
+        return 1
+    fi
+
+    # Perform the commit with the provided message
+    git commit -m "$message"
+}
+
+# Branching
+alias gbr="git branch"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gbv="git branch -v"
+alias gbD="git branch -D"
+
+# Pull, Push, and Fetch
+alias gpu="git pull"
+alias gp="git push"
+alias gpo="git push origin"
+alias gpf="git push --force"
+alias gfa="git fetch --all --prune"
+
+# Merging and Rebase
+alias gmg="git merge"
+alias gmt="git mergetool"
+alias grb="git rebase"
+alias grbc="git rebase --continue"
+alias grbi="git rebase -i"
+alias grbo="git rebase origin/main"
+alias gra="git rebase --autostash"
+
+# Stash
+alias gstash="git stash"
+alias gpop="git stash pop"
+alias gstashl="git stash list"
+alias gstashc="git stash clear"
+
+# Remote
+alias grv="git remote -v"
+alias gra="git remote add"
+alias grrm="git remote remove"
+
+# Clean up
+alias gcl="git clean -fd"
+alias gcld="git clean -f -d -n"
+
+# Tags
+alias gtag="git tag"
+alias gtagv="git tag -l"
+alias gtagd="git tag -d"
+
+# Git info helpers
+alias gs="git show --color"
+alias gsh="git show HEAD"
+alias gsh1="git show HEAD~1"
+alias gsh2="git show HEAD~2"
+alias gwho="git shortlog -sn"
+alias gignored="git check-ignore *"
+
+# Reset
+alias grs="git reset"
+alias grsh="git reset HEAD"
+alias grsh1="git reset HEAD~1"
+alias grsh2="git reset HEAD~2"
+
+# Utilities
+alias gblame="git blame"
+alias grev="git rev-parse --abbrev-ref HEAD"
+alias guncommit="git reset --soft HEAD~1"
+alias ghist="git log --oneline --graph --decorate --all"
+
+# Shortcuts for convenience
+alias g="git"
+alias gundo="git restore --staged"
+
+
