@@ -27,6 +27,7 @@ alias ga="git add"
 alias gau="git add -u"
 alias gaa="git add ."
 alias gca="git commit --amend --no-edit"
+alias gcauth="git commit --amend --author"
 
 # Git commit function
 # :: This command is meant to be invoked as 'gc' only.
