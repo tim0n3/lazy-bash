@@ -129,7 +129,7 @@ alias g="git"
 alias gundo="git restore --staged"
 
 # Sync Fork
-fuction gsyncf () {
+function gsyncf () {
     echo "🔄 Syncing Fork..."
     git fetch upstream
     git checkout main
