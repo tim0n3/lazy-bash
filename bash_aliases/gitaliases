@@ -61,6 +61,19 @@ alias gp="git push"
 alias gpo="git push origin"
 alias gpf="git push --force"
 alias gfa="git fetch --all --prune"
+# Fetch, Pull, and Push
+function gpp() {
+    echo "🔄 Fetching latest changes..."
+    git fetch --all --prune
+
+    echo "⬇️ Pulling latest changes..."
+    git pull --rebase
+
+    echo "⬆️ Pushing your commits..."
+    git push
+
+    echo "✅ Done!"
+}
 
 # Merging and Rebase
 alias gmg="git merge"
