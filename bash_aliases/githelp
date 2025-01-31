@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Git Aliases and Help File
+
+\033[1;34m--- Git Status and Log ---\033[0m
+\033[1;32mgst:\033[0m Shows the working tree status.
+\033[1;32mglg:\033[0m Shows the commit log in a graph format.
+\033[1;32mgls:\033[0m Shows the log with file statistics.
+\033[1;32mgdf:\033[0m Shows the diff between the working directory and index.
+\033[1;32mgdc:\033[0m Shows the diff for staged changes.
+
+\033[1;34m--- Commit and Amend ---\033[0m
+\033[1;32mgad:\033[0m Adds changes to the staging area.
+\033[1;32mgaa:\033[0m Adds all changes to the staging area.
+\033[1;32mgcm:\033[0m Commits changes with a message.
+\033[1;32mgca:\033[0m Amends the last commit without editing the message.
+
+\033[1;34m--- Branching ---\033[0m
+\033[1;32mgbr:\033[0m Lists local branches.
+\033[1;32mgco:\033[0m Checks out a branch.
+\033[1;32mgcb:\033[0m Creates and checks out a new branch.
+
+\033[1;34m--- Pull, Push, Fetch ---\033[0m
+\033[1;32mgpl:\033[0m Pulls changes from the remote repository.
+\033[1;32mgps:\033[0m Pushes changes to the remote repository.
+
+\033[1;34m--- Clean Up ---\033[0m
+\033[1;32mgcl:\033[0m Cleans untracked files and directories.
+\033[1;32mgcld:\033[0m Lists files that would be removed by git clean.
+\033[1;32mgundo:\033[0m Restores staged changes to the working directory.
+
+\033[1;34m--- Shortcuts ---\033[0m
+\033[1;32mg:\033[0m Alias for git (shortcut).
+\033[1;32mgundo:\033[0m Restores files from the last commit to the working directory.
