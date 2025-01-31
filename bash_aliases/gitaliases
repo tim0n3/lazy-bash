@@ -128,4 +128,12 @@ alias ghist="git log --oneline --graph --decorate --all"
 alias g="git"
 alias gundo="git restore --staged"
 
+# Sync Fork
+fuction gsyncf () {
+    echo "🔄 Syncing Fork..."
+    git fetch upstream
+    git checkout main
+    git merge upstream/main
+    git push origin main
+}
 

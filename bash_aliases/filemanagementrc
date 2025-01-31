@@ -5,6 +5,7 @@ alias filesearch='find . -type f -iname'  # Search for files by name
 alias bigfiles='du -h --max-depth=1 | sort -hr'  # List largest files in the current directory
 alias showhidden='ls -ld .*'  # Show hidden files and directories
 alias editfile='vim'  # Open a text file for editing with nano
+alias lS='ls -laSh --color=auto' # Sorted longlist
 
 # Archive management aliases
 alias extract='tar -zxvf'  # Extract a tar.gz archive
