@@ -6,9 +6,9 @@
 # Display help file
 
 githelp() {
-  if [[ "$1" == "help" ]]; then
-    cat ~/bash_aliases/githelp
-  else
+  if [[ "$1" == "help" || "$1" == "" ]]; then
+    echo -e "$(cat ~/lib/githelp)"
+else
     command git "$@"
   fi
 }
