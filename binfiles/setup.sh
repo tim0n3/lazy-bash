@@ -13,6 +13,7 @@
 
 dir="$HOME/lazy_bash"
 aliasdir="$HOME/bash_aliases"
+libdir="$HOME/lib"
 
 log() {
 	local message="$1"
@@ -44,6 +45,9 @@ installdeps() {
 	cp -R "$dir/bash_aliases" "$HOME/" || {
 		error "Error: Failed to copy bash_aliases directory."
 	}
+	cp -R "$dir/lib" "$HOME/" || {
+		error "Error: Failed to copy lib directory."
+	}
 	cat "$dir/bashrc" > "$HOME/.bashrc" || {
 		error "Error: Failed to overwrite your .bashrc file."
 	}
@@ -58,7 +62,7 @@ reloadshell() {
 
 preinstallcleanup() {
 	log "Cleaning up leftovers\n"
-	rm -rf "$dir" "$aliasdir" || {
+	rm -rf "$dir" "$aliasdir" "$libdir" || {
 		error "preinstall_cleanup failed with"$?""
 	}
 }
