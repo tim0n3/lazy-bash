@@ -105,7 +105,7 @@ alias gtagv="git tag -l"
 alias gtagd="git tag -d"
 
 # Git info helpers
-alias gs="git show --color"
+alias gs="git show --color --show-signature"
 alias gsh="git show HEAD"
 alias gsh1="git show HEAD~1"
 alias gsh2="git show HEAD~2"
