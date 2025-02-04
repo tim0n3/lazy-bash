@@ -177,7 +177,7 @@ if [ -t 1 ]; then
 	elif [ -n "$CONSOLE" ]; then
 		echo -e "\n\033[1mConsole IP:\033[0m $(hostname -I)"
 	fi
-	
+
 	echo -e "\n\033[1mCPU Load:\033[0m $(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')%"
 
 	echo -e "\n\033[1mUptime:\033[0m $(uptime -p)"
@@ -198,3 +198,12 @@ if [ -t 1 ]; then
 fi
 
 # End of .bashrc
+# # Start of custom aliases - temp:
+# AutoJump
+. /usr/share/autojump/autojump.sh
+# Neovim configuration
+export PATH="$PATH:/opt/nvim-linux64/bin"
+alias vim="nvim"
+alias vi="nvim"
+alias v="nvim"
+alias nano="nvim" #Fuck you nano users!
