@@ -83,6 +83,8 @@ installrequiredpkgs() {
                 fi
         }
 
+        install_missing_pkgs
+
 }
 
 reloadshell() {
