@@ -63,12 +63,12 @@ backup_system() {
 	create_backup() {
 		log debug "Creating directory structure as needed" "$BLUE"
 		mkdir -p "$backup_destination" || {
-			log error "Failed to create backup directory." "$RED" 
+			log error "Failed to create backup directory." "$RED"
 		}
 
 		local backup_file="$backup_destination/backup_$(date +"%Y%m%d_%H%M%S").tar.gz"
 
-		existing_directories=() 
+		existing_directories=()
 		for each_directory in "${configuration_directories[@]}"; do
 			log debug "Processing directory: '$each_directory'" "$BLUE"
 			if [ -d "$each_directory" ]; then
@@ -91,9 +91,9 @@ backup_system() {
 		tar -cvpzf "$backup_file" \
 			--acls \
 			--xattrs \
-			"${existing_directories[@]}" || { 
+			"${existing_directories[@]}" || {
 				log error "Failed to create backup." "$RED"
-			}	
+			}
 
 		# Break script if tar fails.
 		exit_strategy
@@ -105,4 +105,13 @@ backup_system() {
 		log error "Backup failed..." "$RED"
 	}
 
+}
+
+# Check the number of active connections | assuming this is a web server
+function check_active_connections() {
+        echo "🔍 Checking active connections..."
+        local port80=$(netstat -anp | grep ':80' | wc -l)
+        local port443=$(netstat -anp | grep ':443' | wc -l)
+        local totalconnections=$(netstat -anp | grep ':80|:443' | wc -l)
+        echo -e "Port 80: $port80 \nPort 443: $port443 \nTotal Connections: $totalconnections"
 }
