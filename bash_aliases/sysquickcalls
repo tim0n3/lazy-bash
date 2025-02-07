@@ -110,8 +110,21 @@ backup_system() {
 # Check the number of active connections | assuming this is a web server
 function check_active_connections() {
         echo "🔍 Checking active connections..."
-        local port80=$(netstat -anp | grep ':80' | wc -l)
-        local port443=$(netstat -anp | grep ':443' | wc -l)
-        local totalconnections=$(netstat -anp | grep ':80|:443' | wc -l)
-        echo -e "Port 80: $port80 \nPort 443: $port443 \nTotal Connections: $totalconnections"
+        echo "IPv4 Port 80: $(ss -4tan sport = :80 | wc -l)"
+        echo "IPv4 Port 443: $(ss -4tan sport = :443 | wc -l)"
+        echo "IPv6 Port 80: $(ss -6tan sport = :80 | wc -l)"
+        echo "IPv6 Port 443: $(ss -6tan sport = :443 | wc -l)"
 }
+
+# Identify top IPs hitting the server (Separate IPv4 & IPv6)
+top_attackers() {
+        echo "🔍 Checking top attacking IPv4 addresses..."
+        ss -tan state established | awk '{print $4}' | grep -E "^[0-9]+\." | \
+                cut -d: -f1 | sort | uniq -c | sort -nr | head -n 10
+
+        echo "🔍 Checking top attacking IPv6 addresses..."
+        ss -tan state established | awk '{print $4}' | grep -E "^\[.*\]" | \
+                sed 's/\[\(.*\)\]:.*/\1/' | sort | uniq -c | sort -nr | head -n 10
+}
+
+
