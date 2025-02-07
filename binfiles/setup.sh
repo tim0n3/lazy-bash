@@ -53,6 +53,7 @@ installdeps() {
 	}
 	cd "$HOME" || exit 1
 }
+
 installrequiredpkgs() {
         # List of required packages
         REQUIRED_PKGS=("iproute2" "gawk" "sed" "coreutils" "procps" "util-linux" "sysstat")
@@ -114,7 +115,7 @@ upgradebash() {
 	preinstallcleanup
 	fetchrepo
 	installdeps
-        install_missing_pkgs
+        installrequiredpkgs
 	reloadshell
 	postinstallcleanup
 	sleep 2
@@ -124,7 +125,7 @@ freshinstall() {
 	echo Installing bash
 	fetchrepo
 	installdeps
-        install_missing_pkgs
+        installrequiredpkgs
 	reloadshell
 	postinstallcleanup
 }
