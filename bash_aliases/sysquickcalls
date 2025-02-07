@@ -117,7 +117,7 @@ function check_active_connections() {
 }
 
 # Identify top IPs hitting the server (Separate IPv4 & IPv6)
-top_attackers() {
+function top_attackers() {
         echo "🔍 Checking top attacking IPv4 addresses..."
         ss -tan state established | awk '{print $4}' | grep -E "^[0-9]+\." | \
                 cut -d: -f1 | sort | uniq -c | sort -nr | head -n 10
@@ -127,4 +127,45 @@ top_attackers() {
                 sed 's/\[\(.*\)\]:.*/\1/' | sort | uniq -c | sort -nr | head -n 10
 }
 
+function check_disk_io() {
+        echo "🔍 Checking disk I/O usage..."
+        iostat -x 1 5
+}
+
+# Print the number of times and ip address has accessed the website
+function check_apache_logs() {
+        echo "🔍 Checking Apache logs for potential attacks..."
+        tail -n 50 /var/log/apache2/access.log | awk '{print $1}' | sort | \
+                uniq -c | sort -nr | head
+}
+
+function check_oom_killer() {
+        echo "🔍 Checking if OOM killer was triggered..."
+        dmesg | grep -i "oom"
+}
+
+function check_network_issues() {
+        echo "🔍 Checking network logs for drops..."
+        dmesg | grep -i "network"
+}
+
+function run_ddos_check() {
+        echo "🚀 Running DDoS detection report..."
+        echo "-----------------------------------"
+        check_active_connections
+        echo "-----------------------------------"
+        top_attackers
+        echo "-----------------------------------"
+        check_system_resources
+        echo "-----------------------------------"
+        check_disk_io
+        echo "-----------------------------------"
+        check_apache_logs
+        echo "-----------------------------------"
+        check_oom_killer
+        echo "-----------------------------------"
+        check_network_issues
+        echo "-----------------------------------"
+        echo "✅ DDoS check completed!"
+}
 
