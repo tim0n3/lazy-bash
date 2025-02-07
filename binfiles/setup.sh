@@ -53,6 +53,41 @@ installdeps() {
 	}
 	cd "$HOME" || exit 1
 }
+installrequiredpkgs() {
+        # List of required packages
+        REQUIRED_PKGS=("iproute2" "gawk" "sed" "coreutils" "procps" "util-linux" "sysstat")
+
+# Function to check if a package is installed
+is_installed() {
+        dpkg -l | grep -q "^ii  $1 "
+}
+
+# Function to install missing packages
+install_missing_pkgs() {
+        MISSING_PKGS=()
+
+        for pkg in "${REQUIRED_PKGS[@]}"; do
+                if is_installed "$pkg"; then
+                        echo "✅ $pkg is already installed."
+                else
+                        echo "❌ $pkg is missing."
+                        MISSING_PKGS+=("$pkg")
+                fi
+        done
+
+    # Install missing packages if any
+    if [ ${#MISSING_PKGS[@]} -gt 0 ]; then
+            echo "🚀 Installing missing packages: ${MISSING_PKGS[*]}"
+            sudo apt update
+            sudo apt install --no-install-recommends --no-install-suggests -y "${MISSING_PKGS[@]}"
+    else
+            echo "🎉 All required packages are already installed!"
+    fi
+}
+
+# Run the function
+#install_missing_pkgs
+}
 
 reloadshell() {
 	source "$HOME/.bashrc" || {
@@ -79,6 +114,7 @@ upgradebash() {
 	preinstallcleanup
 	fetchrepo
 	installdeps
+        install_missing_pkgs
 	reloadshell
 	postinstallcleanup
 	sleep 2
@@ -88,6 +124,7 @@ freshinstall() {
 	echo Installing bash
 	fetchrepo
 	installdeps
+        install_missing_pkgs
 	reloadshell
 	postinstallcleanup
 }
