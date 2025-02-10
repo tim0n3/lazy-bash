@@ -69,6 +69,10 @@ installrequiredpkgs() {
                 "wget"
                 "curl"
                 "bash"
+                "neofetch"
+                "iptables"
+                "net-tools"
+                "gnuplot"
         )
 
         is_installed() {
