@@ -56,7 +56,20 @@ installdeps() {
 
 installrequiredpkgs() {
 
-        REQUIRED_PKGS=("iproute2" "gawk" "sed" "coreutils" "procps" "util-linux" "sysstat")
+        REQUIRED_PKGS=(
+                "iproute2"
+                "gawk"
+                "sed"
+                "coreutils"
+                "procps"
+                "util-linux"
+                "sysstat"
+                "gh"
+                "git"
+                "wget"
+                "curl"
+                "bash"
+        )
 
         is_installed() {
                 dpkg -l | grep -q "^ii  $1 "
